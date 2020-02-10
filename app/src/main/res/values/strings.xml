@@ -1,0 +1,26 @@
+<resources>
+    <string name="app_name">Day Trip Planner</string>
+    <string name="destination">Destination</string>
+    <string name="address">Enter address...</string>
+    <string name="nearby_food">Nearby food:</string>
+    <string-array name="cuisines">
+        <item><font color = "#D3D3D3">Select one...</font></item>
+        <item>American (Traditional)</item>
+        <item>Barbecue</item>
+        <item>Breakfast and Brunch</item>
+        <item>Chinese</item>
+        <item>Mexican</item>
+        <item>Italian</item>
+    </string-array>
+    <string name="how_many">How many?:</string>
+    <string name="nearby_attractions">Nearby attractions:</string>
+    <string-array name="attractions">
+        <item><font color = "#D3D3D3">Select one...</font></item>
+        <item>Arts and Entertainment</item>
+        <item>Museums</item>
+        <item>Nightlife</item>
+        <item>Sightseeing</item>
+        <item>Sports</item>
+    </string-array>
+    <string name="go">GO</string>
+</resources>
