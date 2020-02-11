@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity">
+
+    <EditText
+        android:id="@+id/address"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:hint="@string/address"
+        android:inputType="textPersonName"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/destination-title"/>
+
+    <Spinner
+        android:id="@+id/foodSpinner"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:dropDownWidth="wrap_content"
+        android:entries="@array/cuisines"
+        android:spinnerMode="dropdown"
+        app:layout_constraintBottom_toBottomOf="@+id/nearby_food_title"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/nearby_food_title"
+        app:layout_constraintTop_toTopOf="@+id/nearby_food_title" />
+
+    <TextView
+        android:id="@+id/destination-title"
+        android:layout_width="wrap_content"
+        android:layout_height="25dp"
+        android:layout_marginTop="16dp"
+        android:text="@string/destination"
+        android:textSize="18sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/nearby_food_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="@string/nearby_food"
+        android:textSize="18sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/address" />
+
+    <SeekBar
+        android:id="@+id/seekBar_food"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:backgroundTint="#4CAF50"
+        android:foregroundTint="#4CAF50"
+        android:progressTint="#8BC34A"
+        android:scrollbarThumbHorizontal="@android:color/holo_green_dark"
+        android:scrollbarThumbVertical="@android:color/holo_green_dark"
+        android:thumbTint="#4CAF50"
+        app:layout_constraintBottom_toBottomOf="@id/how_many-1"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/how_many-1"
+        app:layout_constraintTop_toTopOf="@+id/how_many-1" />
+
+    <TextView
+        android:id="@+id/how_many-1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="@string/how_many"
+        android:textSize="18sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/nearby_food_title" />
+
+    <TextView
+        android:id="@+id/nearby_attractions_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="@string/nearby_attractions"
+        android:textSize="18sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/how_many-1" />
+
+    <Spinner
+        android:id="@+id/attractionSpinner"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:entries="@array/attractions"
+        app:layout_constraintBottom_toBottomOf="@+id/nearby_attractions_title"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/nearby_attractions_title"
+        app:layout_constraintTop_toTopOf="@+id/nearby_attractions_title" />
+
+    <TextView
+        android:id="@+id/how_many-2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="@string/how_many"
+        android:textSize="18sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/nearby_attractions_title" />
+
+    <SeekBar
+        android:id="@+id/seekBar_attractions"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:progressTint="#8BC34A"
+        android:thumbTint="#4CAF50"
+        app:layout_constraintBottom_toBottomOf="@+id/how_many-2"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/seekBar_food"
+        app:layout_constraintTop_toTopOf="@+id/how_many-2" />
+
+    <Button
+        android:id="@+id/goButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:backgroundTint="#4CAF50"
+        android:text="@string/go"
+        android:textColor="@android:color/background_light"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/how_many-2" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
