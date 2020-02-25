@@ -10,7 +10,10 @@ import android.view.View
 import android.widget.*
 import android.app.AlertDialog
 import android.content.DialogInterface
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
+import android.location.Geocoder
+import org.jetbrains.anko.doAsync
 
 
 class MainActivity : AppCompatActivity() {
@@ -46,24 +49,35 @@ class MainActivity : AppCompatActivity() {
         //in case all of the values were loaded & ready to go
         check()
         go.setOnClickListener{
-            Log.d("Main activity", "onClick() called")
-            val b = AlertDialog.Builder(this)
-            b.setTitle("Confirm address:")
-            b.setMessage(address.text.toString())
-            b.setPositiveButton("OK"){popup, which ->
-                val toast = Toast.makeText(this, "Address confirmed", Toast.LENGTH_LONG)
-                toast.show()
+            var line = ""
+            doAsync {
+                val geocoder = Geocoder(this@MainActivity)
+                var fullAddress = geocoder.getFromLocationName(address.text.toString(), 1)
+                var result = fullAddress.first()
+                line = fullAddress.toString()
+                Log.d("Main activity", "onClick() called")
+                runOnUiThread() {
+                    val b = AlertDialog.Builder(this@MainActivity)
+                    b.setTitle("Confirm address:")
+                    b.setMessage(line)
+                    b.setPositiveButton("OK") { popup, which ->
+                        val intent = Intent(this@MainActivity, LocationsActivity::class.java)
+                        startActivity(intent)
+                        val toast = Toast.makeText(this@MainActivity, "Address confirmed", Toast.LENGTH_LONG)
+                        toast.show()
+                    }
+                    val popup = b.create()
+                    popup.show()
+                    preferences
+                        .edit()
+                        .putString("address", address.text.toString())
+                        .putInt("foodSpinner", foodType.selectedItemPosition)
+                        .putInt("attractionSpinner", attractionType.selectedItemPosition)
+                        .putInt("seekBar_food", num_restaurants.progress)
+                        .putInt("seekBar_attractions", num_attractions.progress)
+                        .apply()
+                }
             }
-            val popup = b.create()
-            popup.show()
-            preferences
-                .edit()
-                .putString("address", address.text.toString())
-                .putInt("foodSpinner", foodType.selectedItemPosition)
-                .putInt("attractionSpinner", attractionType.selectedItemPosition)
-                .putInt("seekBar_food", num_restaurants.progress)
-                .putInt("seekBar_attractions", num_attractions.progress)
-                .apply()
         }
 
         foodType.onItemSelectedListener = itemListener
