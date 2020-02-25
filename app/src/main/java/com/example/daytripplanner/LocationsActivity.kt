@@ -27,24 +27,24 @@ class LocationsActivity : AppCompatActivity() {
         return listOf(
             Location (
                 name = "Location A",
-                rating = "5",
+                rating = 5.0,
                 pricePt = null,
                 address = "123 Example Ave",
                 webpage = "wikipedia.org",
-                phone = "+13025552020"
+                phone = "+13022552020"
             ),
             Location (
                 name = "Location B",
                 pricePt = "$",
-                rating = "4.5",
+                rating = 4.5,
                 address = "123 Example Rd",
                 webpage = "google.com",
-                phone = "+1301257777"
+                phone = "+13012577777"
             ),
             Location (
                 name = "Location C",
                 pricePt = "$$$",
-                rating = "4.9",
+                rating = 4.9,
                 address = "123 Example St",
                 webpage = "gwu.edu",
                 phone = null

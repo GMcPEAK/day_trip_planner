@@ -50,16 +50,14 @@ class MainActivity : AppCompatActivity() {
         check()
         go.setOnClickListener{
             var line = ""
-            doAsync {
                 val geocoder = Geocoder(this@MainActivity)
                 var fullAddress = geocoder.getFromLocationName(address.text.toString(), 1)
                 var result = fullAddress.first()
                 line = fullAddress.toString()
                 Log.d("Main activity", "onClick() called")
-                runOnUiThread() {
                     val b = AlertDialog.Builder(this@MainActivity)
                     b.setTitle("Confirm address:")
-                    b.setMessage(line)
+                    b.setMessage(result.getAddressLine(0))
                     b.setPositiveButton("OK") { popup, which ->
                         val intent = Intent(this@MainActivity, LocationsActivity::class.java)
                         startActivity(intent)
@@ -76,8 +74,8 @@ class MainActivity : AppCompatActivity() {
                         .putInt("seekBar_food", num_restaurants.progress)
                         .putInt("seekBar_attractions", num_attractions.progress)
                         .apply()
-                }
-            }
+
+
         }
 
         foodType.onItemSelectedListener = itemListener

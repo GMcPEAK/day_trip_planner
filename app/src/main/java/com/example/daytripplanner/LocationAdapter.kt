@@ -4,6 +4,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
+import android.widget.RatingBar
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import kotlin.collections.List
@@ -15,7 +16,7 @@ class LocationAdapter(val locations: List<Location>) : RecyclerView.Adapter<Loca
 
         val pricePt: TextView = itemView.findViewById(R.id.pricePt)
 
-        val rating: TextView = itemView.findViewById(R.id.rating)
+        val rating: RatingBar = itemView.findViewById(R.id.rating)
 
         val address: TextView = itemView.findViewById(R.id.address)
 
@@ -43,7 +44,7 @@ class LocationAdapter(val locations: List<Location>) : RecyclerView.Adapter<Loca
         if (currentLocation.phone != null) {
             holder.phone.text = currentLocation.phone
         }
-        holder.rating.text = currentLocation.rating
+        holder.rating.rating = (currentLocation.rating).toFloat()
     }
 
     //Return the total number of rows you expect your list to have
