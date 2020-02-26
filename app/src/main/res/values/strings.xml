@@ -3,6 +3,7 @@
     <string name="destination">Destination</string>
     <string name="address">Enter address...</string>
     <string name="nearby_food">Nearby food:</string>
+    <string name="locationsTitle">Nearby locations:</string>
     <string-array name="cuisines">
         <item><font color = "#D3D3D3">Select one...</font></item>
         <item>American (Traditional)</item>
@@ -23,4 +24,5 @@
         <item>Sports</item>
     </string-array>
     <string name="go">GO</string>
+    <string name="title_locationsActivity">Things to do nearby...</string>
 </resources>
