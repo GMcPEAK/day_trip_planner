@@ -1,15 +1,20 @@
 package com.example.daytripplanner
 
+import android.content.Intent
+import android.net.Uri
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
+import android.widget.Button
+import android.widget.ImageButton
 import android.widget.RatingBar
 import android.widget.TextView
+import androidx.core.content.ContextCompat.startActivity
 import androidx.recyclerview.widget.RecyclerView
-import kotlin.collections.List
 
-class LocationAdapter(val locations: List<Location>) : RecyclerView.Adapter<LocationAdapter.ViewHolder>(){
+
+class LocationAdapter(val locations: List<Location>) : RecyclerView.Adapter<LocationAdapter.ViewHolder>(),
+    View.OnClickListener {
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
         val name: TextView = itemView.findViewById(R.id.name)
@@ -20,9 +25,9 @@ class LocationAdapter(val locations: List<Location>) : RecyclerView.Adapter<Loca
 
         val address: TextView = itemView.findViewById(R.id.address)
 
-        val webpage: TextView = itemView.findViewById(R.id.webpage)
+        var webpage: ImageButton = itemView.findViewById(R.id.web_button)
 
-        val phone: TextView = itemView.findViewById(R.id.phoneNumber)
+        val phone: ImageButton = itemView.findViewById(R.id.phone_button)
     }
 
     // The adapter needs to render a new row and needs to know what XML file to use
@@ -40,9 +45,20 @@ class LocationAdapter(val locations: List<Location>) : RecyclerView.Adapter<Loca
         if (currentLocation.pricePt != null) {
             holder.pricePt.text = "Price: " + currentLocation.pricePt
         }
-        holder.webpage.text = currentLocation.webpage
+        var cont = holder.webpage.getContext()
+        holder.webpage.setOnClickListener {
+            val intent = Intent(android.content.Intent.ACTION_VIEW)
+            intent.data = Uri.parse(currentLocation.webpage)
+            startActivity(cont, intent, null)
+        }
         if (currentLocation.phone != null) {
-            holder.phone.text = currentLocation.phone
+            holder.phone.setOnClickListener {
+                val intent = Intent(android.content.Intent.ACTION_DIAL)
+                intent.setData(Uri.parse("tel:"+currentLocation.phone));
+                startActivity(cont, intent, null)
+            }
+        } else {
+            holder.phone.visibility = View.GONE
         }
         holder.rating.rating = (currentLocation.rating).toFloat()
     }
@@ -50,5 +66,9 @@ class LocationAdapter(val locations: List<Location>) : RecyclerView.Adapter<Loca
     //Return the total number of rows you expect your list to have
     override fun getItemCount(): Int {
         return locations.size
+    }
+
+    override fun onClick(v: View?) {
+
     }
 }

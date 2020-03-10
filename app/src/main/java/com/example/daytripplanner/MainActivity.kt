@@ -1,18 +1,19 @@
 package com.example.daytripplanner
 
+import android.app.AlertDialog
 import android.content.Context
+import android.content.Intent
 import android.content.SharedPreferences
+import android.location.Address
+import android.location.Geocoder
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
 import android.view.View
 import android.widget.*
-import android.app.AlertDialog
-import android.content.DialogInterface
-import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
-import android.location.Geocoder
+import com.google.android.gms.maps.model.LatLng
 import org.jetbrains.anko.doAsync
 
 
@@ -27,9 +28,9 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        Log.d("Main activity","onCreate() called")
+        Log.d("Main activity", "onCreate() called")
 
-        val preferences: SharedPreferences = getSharedPreferences (
+        val preferences: SharedPreferences = getSharedPreferences(
             "day-trip-planner",
             Context.MODE_PRIVATE
         )
@@ -48,20 +49,34 @@ class MainActivity : AppCompatActivity() {
         go.isEnabled = false
         //in case all of the values were loaded & ready to go
         check()
-        go.setOnClickListener{
+        go.setOnClickListener {
+            Log.d("Main activity", "onClick() called")
             var line = ""
+            var lat: Double
+            var long: Double
+            lateinit var result: Address
+            doAsync {
                 val geocoder = Geocoder(this@MainActivity)
                 var fullAddress = geocoder.getFromLocationName(address.text.toString(), 1)
                 var result = fullAddress.first()
+                lat = result.latitude
+                long = result.longitude
+                val latlng = LatLng(lat, long)
                 line = fullAddress.toString()
-                Log.d("Main activity", "onClick() called")
+                runOnUiThread {
                     val b = AlertDialog.Builder(this@MainActivity)
                     b.setTitle("Confirm address:")
                     b.setMessage(result.getAddressLine(0))
-                    b.setPositiveButton("OK") { popup, which ->
-                        val intent = Intent(this@MainActivity, LocationsActivity::class.java)
+                    b.setPositiveButton("View Map") { popup, which ->
+                        val intent = Intent(this@MainActivity, MapsActivity::class.java)
+                        intent.putExtra("latlng", latlng)
                         startActivity(intent)
-                        val toast = Toast.makeText(this@MainActivity, "Address confirmed", Toast.LENGTH_LONG)
+                        val toast =
+                            Toast.makeText(
+                                this@MainActivity,
+                                "Address confirmed",
+                                Toast.LENGTH_LONG
+                            )
                         toast.show()
                     }
                     val popup = b.create()
@@ -71,64 +86,72 @@ class MainActivity : AppCompatActivity() {
                         .putString("address", address.text.toString())
                         .putInt("foodSpinner", foodType.selectedItemPosition)
                         .putInt("attractionSpinner", attractionType.selectedItemPosition)
+                        .putString("attractionWord", attractionType.selectedItem.toString())
                         .putInt("seekBar_food", num_restaurants.progress)
                         .putInt("seekBar_attractions", num_attractions.progress)
+                        .putString("foodWord", foodType.selectedItem.toString())
                         .apply()
+                }
 
+            }
+        }
+
+            foodType.onItemSelectedListener = itemListener
+            attractionType.onItemSelectedListener = itemListener
+            num_restaurants.setOnSeekBarChangeListener(barListener)
+            num_attractions.setOnSeekBarChangeListener(barListener)
+            num_restaurants.max = 10
+            num_attractions.max = 10
+            address.addTextChangedListener(textWatcher)
 
         }
 
-        foodType.onItemSelectedListener = itemListener
-        attractionType.onItemSelectedListener = itemListener
-        num_restaurants.setOnSeekBarChangeListener(barListener)
-        num_attractions.setOnSeekBarChangeListener(barListener)
-        num_restaurants.max = 10
-        num_attractions.max = 10
-        address.addTextChangedListener(textWatcher)
+        private val barListener = object : SeekBar.OnSeekBarChangeListener {
+            override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
+                check()
+            }
 
-    }
+            override fun onStartTrackingTouch(seekBar: SeekBar?) {
+                //do nothing
+            }
 
-    private val barListener = object: SeekBar.OnSeekBarChangeListener {
-        override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
-            check()
+            override fun onStopTrackingTouch(seekBar: SeekBar?) {
+                //do nothing
+            }
+
         }
 
-        override fun onStartTrackingTouch(seekBar: SeekBar?) {
-            //do nothing
+        private val itemListener = object : AdapterView.OnItemSelectedListener {
+            override fun onNothingSelected(parent: AdapterView<*>?) {
+                check()
+            }
+
+            override fun onItemSelected(
+                parent: AdapterView<*>?,
+                view: View?,
+                position: Int,
+                id: Long
+            ) {
+                check()
+            }
+
         }
 
-        override fun onStopTrackingTouch(seekBar: SeekBar?) {
-            //do nothing
+        private val textWatcher = object : TextWatcher {
+            override fun afterTextChanged(s: Editable) {}
+
+            override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {}
+
+            override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {
+                check()
+            }
         }
 
-    }
-
-    private val itemListener = object: AdapterView.OnItemSelectedListener {
-        override fun onNothingSelected(parent: AdapterView<*>?) {
-            check()
+        fun check() {
+            val enable: Boolean =
+                address.text.toString().trim().isNotEmpty()
+                        && foodType.selectedItem.toString() != "Select one..."
+                        && attractionType.selectedItem.toString() != "Select one..."
+            go.isEnabled = enable
         }
-
-        override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
-            check()
-        }
-
-    }
-
-    private val textWatcher = object : TextWatcher {
-        override fun afterTextChanged(s: Editable) {}
-
-        override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {}
-
-        override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {
-            check()
-        }
-    }
-
-    private fun check(){
-        val enable: Boolean =
-            address.text.toString().trim().isNotEmpty()
-                    && foodType.selectedItem.toString() != "Select one..."
-                    && attractionType.selectedItem.toString() != "Select one..."
-        go.isEnabled = enable
-    }
 }
