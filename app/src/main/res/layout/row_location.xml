@@ -35,33 +35,15 @@
                 android:id="@+id/address"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
                 android:textSize="18sp"
-                app:layout_constraintStart_toEndOf="@+id/name"
-                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/name"
                 tools:text="\Address goes here..." />
 
             <TextView
                 android:id="@+id/pricePt"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                app:layout_constraintStart_toEndOf="@+id/rating"
-                app:layout_constraintTop_toBottomOf="@+id/name" />
-
-            <TextView
-                android:id="@+id/phoneNumber"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/name" />
-
-            <TextView
-                android:id="@+id/webpage"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="4dp"
-                android:text="webpage.com"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/rating_label" />
 
@@ -71,7 +53,7 @@
                 android:layout_height="wrap_content"
                 android:text="Rating: "
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/name" />
+                app:layout_constraintTop_toBottomOf="@+id/address" />
 
             <RatingBar
                 android:id="@+id/rating"
@@ -79,7 +61,28 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 app:layout_constraintStart_toEndOf="@+id/rating_label"
-                app:layout_constraintTop_toBottomOf="@+id/name" />
+                app:layout_constraintTop_toBottomOf="@+id/address" />
+
+            <ImageButton
+                android:id="@+id/phone_button"
+                android:layout_width="49dp"
+                android:layout_height="40dp"
+                android:backgroundTint="#008577"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@android:drawable/stat_sys_phone_call" />
+
+            <ImageButton
+                android:id="@+id/web_button"
+                android:layout_width="45dp"
+                android:layout_height="40dp"
+                android:layout_marginEnd="2dp"
+                android:background="#FFFFFF"
+                android:backgroundTint="#008577"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/phone_button"
+                app:srcCompat="@android:drawable/ic_menu_set_as" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
