@@ -71,10 +71,13 @@ class MainActivity : AppCompatActivity() {
                         val intent = Intent(this@MainActivity, MapsActivity::class.java)
                         intent.putExtra("latlng", latlng)
                         startActivity(intent)
+
+                    }
+                    b.setNegativeButton("Cancel") {popup, which ->
                         val toast =
                             Toast.makeText(
                                 this@MainActivity,
-                                "Address confirmed",
+                                "Operation cancelled",
                                 Toast.LENGTH_LONG
                             )
                         toast.show()
